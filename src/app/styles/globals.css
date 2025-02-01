@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #e9ecf0;
+  --foreground: #080808;
+  --bg-sidenav: #5e1391;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.sidenav {
+  @apply w-full h-full bg-[var(--bg-sidenav)] text-[#e4e4e4];
+}
+
+a.link-blue {
+  @apply text-blue-600 hover:text-blue-800;
+}
