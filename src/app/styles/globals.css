@@ -6,6 +6,7 @@
   --background: #e9ecf0;
   --foreground: #080808;
   --bg-sidenav: #5e1391;
+  --bg-table: #afa4bb;
 }
 
 body {
@@ -20,4 +21,8 @@ body {
 
 a.link-blue {
   @apply text-blue-600 hover:text-blue-800;
+}
+
+.section-table {
+  @apply flex w-full p-4 rounded-lg bg-[var(--bg-table)];
 }

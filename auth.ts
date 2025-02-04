@@ -37,18 +37,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth ({
 
                 return null;
             }
-        })
+        }),
     ],
-    callbacks: {
-        authorized: async ({ auth, request: {nextUrl} }) => {
-            const isLoggedIn = !!auth?.user;
-            const isOnDashBoard = nextUrl.pathname.startsWith('/dashboard');
-            if (isOnDashBoard) {
-                return !!auth;
-            } else if (isLoggedIn) {
-                return Response.redirect(new URL('/dashboard', nextUrl));
-            }
-            return !!auth;
-        }
-    }
 });
