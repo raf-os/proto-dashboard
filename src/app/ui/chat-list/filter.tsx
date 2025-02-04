@@ -24,9 +24,7 @@ export default function ConversationFilter() {
     return (
         <div
             className={clsx(
-                "section-table flex-col gap-4 relative overflow-hidden",
-                showFilters && "h-auto",
-                !showFilters && "h-14",
+                "section-table flex-col overflow-hidden transition",
             )}
         >
             <button
@@ -41,25 +39,23 @@ export default function ConversationFilter() {
                 </span>
             </button>
 
-            <form>
-                <div className={clsx(
-                    !showFilters && "hidden",
-                )}>
-                    <label>Telefone: </label>
+            
+            <div className={showFilters? "collapsable show": "collapsable"}><form>
+                <label>Telefone: </label>
 
-                    <select
-                        name="origin-number"
-                        id="origin-number"
-                        className="px-2 rounded-md"
-                        onChange={(e) => {
-                            applyFilter(e.target.value);
-                        }}
-                    >
-                        <option value="1">Telefone 1</option>
-                        <option value="2">Telefone 2</option>
-                    </select>
-                </div>
-            </form>
+                <select
+                    name="origin-number"
+                    id="origin-number"
+                    className="px-2 rounded-md"
+                    onChange={(e) => {
+                        applyFilter(e.target.value);
+                    }}
+                >
+                    <option value="1">Telefone 1</option>
+                    <option value="2">Telefone 2</option>
+                </select>
+            </form></div>
+            
         </div>
     )
 }

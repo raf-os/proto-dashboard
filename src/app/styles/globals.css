@@ -26,3 +26,13 @@ a.link-blue {
 .section-table {
   @apply flex w-full p-4 rounded-lg bg-[var(--bg-table)];
 }
+
+.collapsable {
+  transition: all ease-out 0.5s;
+  max-height: 0;
+  overflow: hidden;
+}
+
+.collapsable.show {
+  max-height: 100%;
+}
