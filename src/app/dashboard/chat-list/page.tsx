@@ -1,4 +1,4 @@
-import ConversationItem from "@/ui/chat-list/conv-item";
+import ConversationList from "@/dashboard/chat-list/conversation-list";
 import ChatBubble from "@/ui/chat-list/chat-bubble";
 import ConversationFilter from "@/ui/chat-list/filter";
 
@@ -16,9 +16,7 @@ export default async function ChatListPage(props: {
             <ConversationFilter />
 
             <div className="section-table flex-1 flex-row gap-4 overflow-hidden">
-                <div className="flex flex-0 w-64 bg-white">
-                    <ConversationItem />
-                </div>
+                <ConversationList org_phone={origin} />
 
                 <div className="flex flex-col flex-1 p-4 gap-4 bg-white overflow-x-hidden overflow-y-scroll">
                     <ChatBubble origin="bot">

@@ -1,16 +1,18 @@
 import mongoose, { Schema, model } from "mongoose";
+import { MessageSchema, IMessage } from "./Message";
 
-const CommentSchema = new Schema({
+export interface IConversation extends mongoose.Document {
+    origin: string;
+    user: string;
+    date?: Date;
+    content: IMessage;
+}
 
-});
-
-const ConversationSchema = new Schema({
+const ConversationSchema = new Schema<IConversation>({
     origin: String,
     user: String,
     date: { type: Date, default: Date.now },
-    content: [{
-        sender: String,
-        content: String,
-        timestamp: { type: Date, default: Date.now }
-    }]
+    content: [MessageSchema],
 });
+
+export default mongoose.models.Conversation || mongoose.model<IConversation>("Conversation", ConversationSchema);

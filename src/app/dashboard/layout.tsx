@@ -8,7 +8,7 @@ export default function DashboardLayout ({ children } : { children: React.ReactN
             </div>
             
             <div className="w-full min-h-dvh p-8">
-                    {children}
+                {children}
             </div>
         </div>
     );

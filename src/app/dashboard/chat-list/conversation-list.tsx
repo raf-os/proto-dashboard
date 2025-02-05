@@ -1,0 +1,38 @@
+import ConversationItem from "@/ui/chat-list/conv-item";
+import { fetchConversations } from "@/lib/actions";
+import { IConversation } from "@/models/Conversation";
+import { headers } from "next/headers";
+
+export default async function ConversationList({ org_phone }: { org_phone: string; }) {
+    const host = await headers().then((res) => res.get("host"));
+    const protocol = process?.env.NODE_ENV==="development"?"http":"https";
+    const conversations_request = await fetch(`${protocol}://${host}/api/test/fetch-conversations/`, {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json',
+        },
+        body: JSON.stringify({
+            organization_phone: org_phone,
+        }),
+    });
+
+    if (!conversations_request.ok) {
+        return (
+            <div className="flex flex-0 w-64 bg-white">
+                ERROR LOL
+            </div>
+        )
+    }
+
+    const conversations = await conversations_request.json().then((res) => res.conversations);
+
+    return (
+        <div className="flex flex-0 w-64 bg-white">
+            {conversations && conversations.map((conversation: IConversation) => (
+                <ConversationItem conversation={conversation} />
+            ))}
+
+            {conversations.length===0 && "No conversations to display"}
+        </div>
+    )
+}  
