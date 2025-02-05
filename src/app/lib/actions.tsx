@@ -6,7 +6,8 @@ import { signIn } from "@root/auth";
 import { AuthError } from "next-auth";
 import connectDB from "@/lib/database";
 import Message from "@/models/Message";
-import Conversation from "@/models/Conversation";
+import Conversation, { IConversation } from "@/models/Conversation";
+import { HydratedDocument } from "mongoose";
 
 interface IConversationListRequestParams {
     organization_id?: string;
@@ -60,4 +61,20 @@ async function testFetchConversations(params: IConversationListRequestParams) {
 export async function populateDatabase() {
     // TEST FUNCTION, ERASE WHEN DONE!!
     await connectDB();
+
+    await Message.deleteMany({});
+    await Conversation.deleteMany({});
+
+    const prototype_conversation: IConversation = {
+        origin: "1",
+        user: "1234",
+    }
+
+    try {
+        await Conversation.create(prototype_conversation);
+        return 'success';
+    }
+    catch(e) {
+        return 'no good';
+    }
 }

@@ -1,6 +1,6 @@
 import mongoose, { Schema, model } from "mongoose";
 
-export interface IMessage extends mongoose.Document {
+export interface IMessage {
     sender: string;
     content: string;
     timestamp?: Date;    

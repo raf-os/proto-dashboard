@@ -1,11 +1,11 @@
 import mongoose, { Schema, model } from "mongoose";
 import { MessageSchema, IMessage } from "./Message";
 
-export interface IConversation extends mongoose.Document {
+export interface IConversation {
     origin: string;
     user: string;
     date?: Date;
-    content: IMessage;
+    content?: IMessage;
 }
 
 const ConversationSchema = new Schema<IConversation>({
