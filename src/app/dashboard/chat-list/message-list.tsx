@@ -1,0 +1,48 @@
+import ChatBubble from "@/ui/chat-list/chat-bubble";
+import { IMessage } from "@/models/Message";
+import { headers } from "next/headers";
+
+export default async function MessageList({ org_phone, user_phone }: { org_phone: string; user_phone?: string}) {
+    let content = null;
+    if (user_phone) {
+        const host = await headers().then((res) => res.get("host"));
+        const protocol = process?.env.NODE_ENV==="development"?"http":"https";
+        const req = await fetch(`${protocol}://${host}/api/test/fetch-conversation-detail/`, {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+            },
+            body: JSON.stringify({
+                organization_phone: org_phone,
+                user_phone: user_phone,
+            }),
+        });
+
+        if (!req.ok) {
+            return (
+                <div className="flex flex-0 w-64 bg-white">
+                    ERROR LOL
+                </div>
+            )
+        }
+
+        const conversation = await req.json().then((res) => res.conversations);
+        if (conversation.length > 0) {
+            content = (
+                <>
+                {conversation[0].content.map((msg: IMessage) => (
+                    <ChatBubble key={msg._id} origin={msg.sender}>
+                        { msg.content }
+                    </ChatBubble>))
+                }
+                </>
+            );
+        }
+    }
+
+    return (
+        <div className="flex flex-col flex-1 p-4 gap-4 bg-white overflow-x-hidden overflow-y-scroll">
+            { content }
+        </div>
+    )
+}

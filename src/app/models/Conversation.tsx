@@ -2,6 +2,7 @@ import mongoose, { Schema, model } from "mongoose";
 import { MessageSchema, IMessage } from "./Message";
 
 export interface IConversation {
+    _id?: string;
     origin: string;
     user: string;
     date?: Date;

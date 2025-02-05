@@ -1,5 +1,4 @@
 import ConversationItem from "@/ui/chat-list/conv-item";
-import { fetchConversations } from "@/lib/actions";
 import { IConversation } from "@/models/Conversation";
 import { headers } from "next/headers";
 
@@ -29,7 +28,7 @@ export default async function ConversationList({ org_phone }: { org_phone: strin
     return (
         <div className="flex flex-0 w-64 bg-white">
             {conversations && conversations.map((conversation: IConversation) => (
-                <ConversationItem conversation={conversation} />
+                <ConversationItem key={ conversation._id } conversation={conversation} />
             ))}
 
             {conversations.length===0 && "No conversations to display"}

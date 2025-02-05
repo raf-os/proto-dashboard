@@ -1,11 +1,11 @@
-import ConversationList from "@/dashboard/chat-list/conversation-list";
-import ChatBubble from "@/ui/chat-list/chat-bubble";
+import ConversationList from "./conversation-list";
+import MessageList from "./message-list";
 import ConversationFilter from "@/ui/chat-list/filter";
 
 export default async function ChatListPage(props: {
     searchParams?: Promise<{
         origin?: string;
-        instance?: string;
+        client?: string;
     }>;
 }) {
     const searchParams = await props.searchParams;
@@ -18,15 +18,7 @@ export default async function ChatListPage(props: {
             <div className="section-table flex-1 flex-row gap-4 overflow-hidden">
                 <ConversationList org_phone={origin} />
 
-                <div className="flex flex-col flex-1 p-4 gap-4 bg-white overflow-x-hidden overflow-y-scroll">
-                    <ChatBubble origin="bot">
-                        Sample bot message
-                    </ChatBubble>
-
-                    <ChatBubble origin="user">
-                        Sample user message
-                    </ChatBubble>
-                </div>
+                <MessageList org_phone={origin} user_phone={ searchParams?.client } />
             </div>
         </div>
     )

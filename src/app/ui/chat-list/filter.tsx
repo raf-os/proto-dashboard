@@ -18,6 +18,7 @@ export default function ConversationFilter() {
     const applyFilter = (term: string) => {
         const params = new URLSearchParams(searchParams);
         params.set('origin', term);
+        params.delete('client');
         replace(`${pathname}?${params.toString()}`);
     }
 
