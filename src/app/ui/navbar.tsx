@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import type { DashboardRoute } from "@/lib/defs";
+import { auth } from "@root/auth";
 import NavbarLink from "@/ui/navbar-link";
 
 export default function Navbar() {

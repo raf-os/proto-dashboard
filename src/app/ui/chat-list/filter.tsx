@@ -53,7 +53,6 @@ export default function ConversationFilter() {
                     }}
                 >
                     <option value="1">Telefone 1</option>
-                    <option value="2">Telefone 2</option>
                 </select>
             </form></div>
             

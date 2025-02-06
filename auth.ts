@@ -31,7 +31,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth ({
                         id: "1",
                         name: (credentials.username as string),
                         password: (credentials.password as string),
-                        associated_phones: [ '1', '2' ],
+                        associated_phones: [ '1' ],
                     } satisfies User;
                     return user;
                 }
