@@ -11,7 +11,7 @@ export default async function ConversationList({ org_phone }: { org_phone: strin
             'Content-type': 'application/json',
         },
         body: JSON.stringify({
-            organization_phone: org_phone,
+            organization_phone_number: org_phone,
         }),
     });
 

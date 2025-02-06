@@ -14,8 +14,8 @@ interface IConversationListRequestParams {
 }
 
 interface IConversationRequestParams {
-    user_phone: string;
-    organization_phone: string;
+    user_phone_number: string;
+    organization_phone_number: string;
     organization_id?: string;
 }
 
@@ -47,7 +47,7 @@ export async function testFetchConversationDetail(params: IConversationRequestPa
 
     try {
         const conversation = await Conversation.aggregate([
-            { $match: { 'origin': params.organization_phone, 'user': params.user_phone, } },
+            { $match: { 'origin': params.organization_phone_number, 'user': params.user_phone_number, } },
             { $unwind: "$content" },
             { $replaceRoot: { newRoot: "$content" } },
             { $sort: { timestamp: -1 } }

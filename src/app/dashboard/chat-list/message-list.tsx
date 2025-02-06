@@ -13,8 +13,8 @@ export default async function MessageList({ org_phone, user_phone }: { org_phone
                 'Content-type': 'application/json',
             },
             body: JSON.stringify({
-                organization_phone: org_phone,
-                user_phone: user_phone,
+                organization_phone_number: org_phone,
+                user_phone_number: user_phone,
             }),
         });
 
