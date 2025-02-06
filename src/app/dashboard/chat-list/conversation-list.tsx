@@ -17,21 +17,19 @@ export default async function ConversationList({ org_phone }: { org_phone: strin
 
     if (!conversations_request.ok) {
         return (
-            <div className="flex flex-0 w-64 bg-white">
-                ERROR LOL
-            </div>
+            <>ERROR LOL</>
         )
     }
 
     const conversations = await conversations_request.json().then((res) => res.conversations);
 
     return (
-        <div className="flex flex-0 w-64 bg-white">
+        <>
             {conversations && conversations.map((conversation: IConversation) => (
                 <ConversationItem key={ conversation._id } conversation={conversation} />
             ))}
 
             {conversations.length===0 && "No conversations to display"}
-        </div>
+        </>
     )
 }  

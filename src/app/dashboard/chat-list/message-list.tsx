@@ -20,9 +20,9 @@ export default async function MessageList({ org_phone, user_phone }: { org_phone
 
         if (!req.ok) {
             return (
-                <div className="flex flex-0 w-64 bg-white">
+                <>
                     ERROR LOL
-                </div>
+                </>
             )
         }
 
@@ -41,8 +41,8 @@ export default async function MessageList({ org_phone, user_phone }: { org_phone
     }
 
     return (
-        <div className="flex flex-col flex-1 p-4 gap-4 bg-white overflow-x-hidden overflow-y-scroll">
+        <>
             { content }
-        </div>
+        </>
     )
 }

@@ -16,9 +16,13 @@ export default async function ChatListPage(props: {
             <ConversationFilter />
 
             <div className="section-table flex-1 flex-row gap-4 overflow-hidden">
-                <ConversationList org_phone={origin} />
+                <div className="flex flex-0 w-64 bg-white">
+                    <ConversationList org_phone={origin} />
+                </div>
 
-                <MessageList org_phone={origin} user_phone={ searchParams?.client } />
+                <div className="flex flex-col flex-1 p-4 gap-4 bg-white overflow-x-hidden overflow-y-scroll">
+                    <MessageList org_phone={origin} user_phone={ searchParams?.client } />
+                </div>
             </div>
         </div>
     )
