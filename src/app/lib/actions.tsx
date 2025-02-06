@@ -7,7 +7,6 @@ import { AuthError } from "next-auth";
 import connectDB from "@/lib/database";
 import Message, { IMessage } from "@/models/Message";
 import Conversation, { IConversation } from "@/models/Conversation";
-import { HydratedDocument } from "mongoose";
 
 interface IConversationListRequestParams {
     organization_id?: string;
@@ -49,7 +48,9 @@ export async function testFetchConversationDetail(params: IConversationRequestPa
     try {
         const conversation = await Conversation.aggregate([
             { $match: { 'origin': params.organization_phone, 'user': params.user_phone, } },
-            { $project: { 'content': 1 } },
+            { $unwind: "$content" },
+            { $replaceRoot: { newRoot: "$content" } },
+            { $sort: { timestamp: -1 } }
         ]);
         return conversation;
     } catch(e) {
@@ -88,23 +89,33 @@ export async function populateDatabase() {
     await Message.deleteMany({});
     await Conversation.deleteMany({});
 
-    const prototype_messages: IMessage[] = [
-        { sender: "user", content: "asdf 1234", },
+    const prototype_messages: IMessage[][] = [
+        [
+        { sender: "user", content: "Write me a romance novel between Shrek and Shadow the Hedgehog.", },
         { sender: "bot", content: "Acknowleged. Exterminating the human race.", },
+        ], [
+        { sender: "user", content: "hello yes", },
+        ]
     ];
 
-    const prototype_conversation: IConversation = {
+    const prototype_conversation: IConversation[] = [{
         origin: "1",
         user: "1234",
-    };
+    },{
+        origin: "1",
+        user: "2345",
+    }];
 
     try {
-        const conversation = new Conversation(prototype_conversation);
-        prototype_messages.map((msg) => { conversation.content.addToSet(msg) });
-        await conversation.save();
+        await prototype_conversation.forEach(async (value, index) => {
+            const conversation = new Conversation(value);
+            prototype_messages[index].map((msg) => { conversation.content.addToSet(msg) });
+            await conversation.save();
+        });
         return 'success';
     }
     catch(e) {
+        console.log(e);
         return 'no good';
     }
 }

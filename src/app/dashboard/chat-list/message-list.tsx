@@ -30,7 +30,7 @@ export default async function MessageList({ org_phone, user_phone }: { org_phone
         if (conversation.length > 0) {
             content = (
                 <>
-                {conversation[0].content.map((msg: IMessage) => (
+                {conversation.map((msg: IMessage) => (
                     <ChatBubble key={msg._id} origin={msg.sender}>
                         { msg.content }
                     </ChatBubble>))

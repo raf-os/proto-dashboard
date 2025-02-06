@@ -7,7 +7,7 @@ import clsx from "clsx";
 export default function ConversationItem({conversation}: {conversation: IConversation}) {
     const searchParams = useSearchParams();
 
-    const org_phone = searchParams.get("origin");
+    const org_phone = searchParams.get("origin") || "1";
     const user_phone = searchParams.get("client");
 
     const pathname = usePathname();
@@ -23,7 +23,7 @@ export default function ConversationItem({conversation}: {conversation: IConvers
         <div
             key={ conversation._id }
             className={clsx(
-                "w-full h-14 px-2 py-4 border-b border-b-gray-400 overflow-hidden cursor-pointer",
+                "flex w-full h-14 px-2 py-4 border-b border-b-gray-400 overflow-hidden cursor-pointer",
                 (org_phone==conversation.origin && user_phone==conversation.user) && "bg-blue-400",
             )}
             onClick={() => viewConversation(conversation.user)}
