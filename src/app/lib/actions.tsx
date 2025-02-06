@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { signIn } from "@root/auth";
 import { AuthError } from "next-auth";
 import connectDB from "@/lib/database";
-import Message, { IMessage } from "@/models/Message";
+import { IMessage } from "@/models/Message";
 import Conversation, { IConversation } from "@/models/Conversation";
 
 interface IConversationListRequestParams {
@@ -86,7 +86,7 @@ export async function populateDatabase() {
     // TEST FUNCTION, ERASE WHEN DONE!!
     await connectDB();
 
-    await Message.deleteMany({});
+    //await Message.deleteMany({});
     await Conversation.deleteMany({});
 
     const prototype_messages: IMessage[][] = [
