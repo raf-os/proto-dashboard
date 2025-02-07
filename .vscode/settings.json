@@ -3,6 +3,22 @@
         {
             "folderPath": "proto-dashboard/src/app/dashboard/",
             "color": "foldercolorizer.color_9966ff"
+        },
+        {
+            "folderPath": "proto-dashboard/src/app/lib/",
+            "color": "foldercolorizer.color_cccc33"
+        },
+        {
+            "folderPath": "proto-dashboard/src/app/models/",
+            "color": "foldercolorizer.color_cc0033"
+        },
+        {
+            "folderPath": "proto-dashboard/src/app/ui/",
+            "color": "foldercolorizer.color_00ffcc"
+        },
+        {
+            "folderPath": "proto-dashboard/src/app/api/",
+            "color": "foldercolorizer.color_3399ff"
         }
     ]
 }

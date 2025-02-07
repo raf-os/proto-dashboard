@@ -5,19 +5,9 @@ import { redirect } from "next/navigation";
 import { signIn } from "@root/auth";
 import { AuthError } from "next-auth";
 import connectDB from "@/lib/database";
-import { IMessage } from "@/models/Message";
+import { IMessage, ISender } from "@/models/Message";
 import Conversation, { IConversation } from "@/models/Conversation";
-
-interface IConversationListRequestParams {
-    organization_id?: string;
-    organization_phone: string;
-}
-
-interface IConversationRequestParams {
-    user_phone_number: string;
-    organization_phone_number: string;
-    organization_id?: string;
-}
+import { IConversationListRequestParams, IConversationRequestParams } from "@/lib/defs";
 
 export async function authenticate(prevState: string | undefined, formData: FormData) {
     try {
@@ -89,27 +79,34 @@ export async function populateDatabase() {
     //await Message.deleteMany({});
     await Conversation.deleteMany({});
 
+    const sender_human: ISender = {
+        sender_type: "user",
+    }
+    const sender_bot: ISender = {
+        sender_type: "chatbot",
+    }
+
     const prototype_messages: IMessage[][] = [
         [
-        { sender: "user", content: "Write me a romance novel between Shrek and Shadow the Hedgehog.", },
-        { sender: "bot", content: "Acknowleged. Exterminating the human race.", },
+        { sender: sender_human, content: "Write me a romance novel between Shrek and Shadow the Hedgehog.", },
+        { sender: sender_bot, content: "Acknowleged. Exterminating the human race.", },
         ], [
-        { sender: "user", content: "hello yes", },
+        { sender: sender_bot, content: "hello yes", },
         ]
     ];
 
     const prototype_conversation: IConversation[] = [{
-        origin: "1",
-        user: "1234",
+        organization_phone_number: "1",
+        user_phone_number: "1234",
     },{
-        origin: "1",
-        user: "2345",
+        organization_phone_number: "1",
+        user_phone_number: "2345",
     }];
 
     try {
         await prototype_conversation.forEach(async (value, index) => {
             const conversation = new Conversation(value);
-            prototype_messages[index].map((msg) => { conversation.content.addToSet(msg) });
+            prototype_messages[index].map((msg) => { conversation.messages.addToSet(msg) });
             await conversation.save();
         });
         return 'success';

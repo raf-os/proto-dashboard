@@ -1,14 +1,26 @@
 import mongoose, { Schema, model } from "mongoose";
 
+export interface ISender {
+    sender_id?: string;
+    sender_type: string;
+};
+
 export interface IMessage {
     _id?: string;
-    sender: string;
+    sender: ISender;
     content: string;
     timestamp?: Date;    
-}
+};
+
+export const SenderSchema = new Schema<ISender>({
+    sender_id: String,
+    sender_type: {type: String, required: true},
+}, {
+    _id: false,
+});
 
 export const MessageSchema = new Schema<IMessage>({
-    sender: { type: String, required: true },
+    sender: SenderSchema,
     content: { type: String, required: true },
     timestamp: { type: Date, default: Date.now },
 });

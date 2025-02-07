@@ -12,3 +12,14 @@ export type DashboardRoute = {
     icon?: string;
     action?: string;
 }
+
+export interface IConversationListRequestParams {
+    organization_id?: string;
+    organization_phone: string;
+}
+
+export interface IConversationRequestParams {
+    user_phone_number: string;
+    organization_phone_number: string;
+    organization_id?: string;
+}

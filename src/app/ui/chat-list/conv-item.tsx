@@ -24,11 +24,11 @@ export default function ConversationItem({conversation}: {conversation: IConvers
             key={ conversation._id }
             className={clsx(
                 "flex w-full h-14 px-2 py-4 border-b border-b-gray-400 overflow-hidden cursor-pointer",
-                (org_phone==conversation.origin && user_phone==conversation.user) && "bg-blue-400",
+                (org_phone==conversation.organization_phone_number && user_phone==conversation.user_phone_number) && "bg-blue-400",
             )}
-            onClick={() => viewConversation(conversation.user)}
+            onClick={() => viewConversation(conversation.user_phone_number)}
         >
-            { conversation.user }
+            { conversation.user_phone_number }
         </div>
     )
 }
