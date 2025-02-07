@@ -2,7 +2,7 @@ import mongoose, { Schema, model } from "mongoose";
 
 export interface ISender {
     sender_id?: string;
-    sender_type: string;
+    sender_type: "user" | "chatbot" | "human_operator" | "broadcast_operator";
 };
 
 export interface IMessage {

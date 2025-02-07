@@ -3,6 +3,7 @@ export type User = {
     name: string;
     password: string;
     associated_phones?: string[];
+    selected_org_phone?: number;
 }
 
 export type DashboardRoute = {
@@ -15,7 +16,7 @@ export type DashboardRoute = {
 
 export interface IConversationListRequestParams {
     organization_id?: string;
-    organization_phone: string;
+    organization_phone_number: string;
 }
 
 export interface IConversationRequestParams {

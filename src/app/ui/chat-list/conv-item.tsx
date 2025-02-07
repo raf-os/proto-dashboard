@@ -2,7 +2,7 @@
 
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { IConversation } from "@/models/Conversation";
-import clsx from "clsx";
+import { cn, formatPhoneNumber } from "@lib/utils";
 
 export default function ConversationItem({conversation}: {conversation: IConversation}) {
     const searchParams = useSearchParams();
@@ -22,13 +22,13 @@ export default function ConversationItem({conversation}: {conversation: IConvers
     return (
         <div
             key={ conversation._id }
-            className={clsx(
+            className={cn(
                 "flex w-full h-14 px-2 py-4 border-b border-b-gray-400 overflow-hidden cursor-pointer",
                 (org_phone==conversation.organization_phone_number && user_phone==conversation.user_phone_number) && "bg-blue-400",
             )}
             onClick={() => viewConversation(conversation.user_phone_number)}
         >
-            { conversation.user_phone_number }
+            { formatPhoneNumber(conversation.user_phone_number) }
         </div>
     )
 }

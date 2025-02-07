@@ -1,6 +1,7 @@
 import ChatBubble from "@/ui/chat-list/chat-bubble";
 import { IMessage } from "@/models/Message";
 import { headers } from "next/headers";
+import { Suspense } from "react";
 
 export default async function MessageList({ org_phone, user_phone }: { org_phone: string; user_phone?: string}) {
     let content = null;
@@ -16,12 +17,13 @@ export default async function MessageList({ org_phone, user_phone }: { org_phone
                 organization_phone_number: org_phone,
                 user_phone_number: user_phone,
             }),
+            cache: 'force-cache',
         });
 
         if (!req.ok) {
             return (
                 <>
-                    ERROR LOL
+                    Error fetching messages
                 </>
             )
         }
@@ -31,9 +33,12 @@ export default async function MessageList({ org_phone, user_phone }: { org_phone
             content = (
                 <>
                 {conversation.map((msg: IMessage) => (
-                    <ChatBubble key={msg._id} origin={msg.sender.sender_type}>
-                        { msg.content }
-                    </ChatBubble>))
+                    <Suspense key={msg._id}>
+                        <ChatBubble origin={msg.sender.sender_type}>
+                            { msg.content }
+                        </ChatBubble>
+                    </Suspense>
+                    ))
                 }
                 </>
             );

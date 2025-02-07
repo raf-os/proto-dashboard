@@ -1,6 +1,7 @@
 import ConversationItem from "@/ui/chat-list/conv-item";
 import { IConversation } from "@/models/Conversation";
 import { headers } from "next/headers";
+import { Suspense } from "react";
 
 export default async function ConversationList({ org_phone }: { org_phone: string; }) {
     const host = await headers().then((res) => res.get("host"));
@@ -13,11 +14,12 @@ export default async function ConversationList({ org_phone }: { org_phone: strin
         body: JSON.stringify({
             organization_phone_number: org_phone,
         }),
+        cache: 'force-cache',
     });
 
     if (!conversations_request.ok) {
         return (
-            <>ERROR LOL</>
+            <>Error fetching conversation list</>
         )
     }
 
@@ -26,7 +28,9 @@ export default async function ConversationList({ org_phone }: { org_phone: strin
     return (
         <>
             {conversations && conversations.map((conversation: IConversation) => (
-                <ConversationItem key={ conversation._id } conversation={conversation} />
+                <Suspense key={ conversation._id }>
+                    <ConversationItem conversation={conversation} />
+                </Suspense>
             ))}
 
             {conversations.length===0 && "No conversations to display"}

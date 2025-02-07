@@ -37,9 +37,9 @@ export async function testFetchConversationDetail(params: IConversationRequestPa
 
     try {
         const conversation = await Conversation.aggregate([
-            { $match: { 'origin': params.organization_phone_number, 'user': params.user_phone_number, } },
-            { $unwind: "$content" },
-            { $replaceRoot: { newRoot: "$content" } },
+            { $match: { 'organization_phone_number': params.organization_phone_number, 'user_phone_number': params.user_phone_number, } },
+            { $unwind: "$messages" },
+            { $replaceRoot: { newRoot: "$messages" } },
             { $sort: { timestamp: -1 } }
         ]);
         return conversation;
@@ -55,13 +55,13 @@ export async function fetchConversations(params: IConversationListRequestParams)
 }
 
 async function testFetchConversations(params: IConversationListRequestParams) {
-    const origin = params?.organization_phone || "1";
+    const origin = params?.organization_phone_number || "1";
 
     await connectDB();
 
     try {
         const conversations = await Conversation.aggregate([
-            { $match: { 'origin': origin } },
+            { $match: { 'organization_phone_number': origin } },
             { $project: { 'content': 0 } },
             { $sort: { 'date': -1 } },
         ]);
@@ -97,10 +97,10 @@ export async function populateDatabase() {
 
     const prototype_conversation: IConversation[] = [{
         organization_phone_number: "1",
-        user_phone_number: "1234",
+        user_phone_number: "5531999991234",
     },{
         organization_phone_number: "1",
-        user_phone_number: "2345",
+        user_phone_number: "553199991234",
     }];
 
     try {
